@@ -6,10 +6,13 @@ export class Board {
     this.width = width;
     this.height = height;
     this.board = Array.from({ length: height }, () => Array.from({ length: width }, () => null));
+    this.falling = null
   }
 
   drop(value) {
+    if (this.falling) throw new Error("already falling")
     const col = Math.floor(this.width / 2)
+    this.falling = {value, row: 0, col};
     this.board[0][col] = value
   }
   tick() {

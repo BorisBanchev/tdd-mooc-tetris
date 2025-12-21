@@ -46,7 +46,6 @@ describe("Falling blocks", () => {
     });
   }); 
 
-  /*
   describe("When a block reaches the bottom", () => {
     beforeEach(() => {
       board.drop("X");
@@ -74,7 +73,6 @@ describe("Falling blocks", () => {
       expect(board.hasFalling(), "the block should stop moving").to.be.false;
     });
   });
-  */
 
   /*
   describe("When a block lands on another block", () => {

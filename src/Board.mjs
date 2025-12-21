@@ -22,11 +22,11 @@ export class Board {
       this.board[row][col] = null;
       this.board[row + 1][col] = value;
       this.falling.row = row + 1;
-    } else {
-      this.falling = null;
-    }
+    } 
   }
-
+  hasFalling(){
+    return !!this.falling
+  }
   toString() {
     return this.board.map((row) => row.map((cell) => (cell === null ? "." : cell)).join("")).join("\n") + "\n";
   }

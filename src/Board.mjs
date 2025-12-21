@@ -16,13 +16,15 @@ export class Board {
     this.board[0][col] = value
   }
   tick() {
-    for (let r = 0; r < this.height - 1; r++) 
-      for (let c = 0; c < this.width; c++ ) 
-        if (this.board[r][c] !== null && this.board[r + 1][c] === null) {
-          this.board[r + 1][c] = this.board[r][c]
-          this.board[r][c] = null
-          return
-        }
+    if (!this.falling) return;
+    const { row, col, value } = this.falling;
+    if (row + 1 < this.height && this.board[row + 1][col] === null) {
+      this.board[row][col] = null;
+      this.board[row + 1][col] = value;
+      this.falling.row = row + 1;
+    } else {
+      this.falling = null;
+    }
   }
 
   toString() {

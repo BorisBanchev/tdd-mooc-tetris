@@ -22,7 +22,9 @@ export class Board {
       this.board[row][col] = null;
       this.board[row + 1][col] = value;
       this.falling.row = row + 1;
-    } 
+    } else {
+      this.falling = null
+    }
   }
   hasFalling(){
     return !!this.falling

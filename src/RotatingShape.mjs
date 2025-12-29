@@ -10,4 +10,10 @@ export class RotatingShape {
   toString() {
     return this.grid.map(row => row.join('')).join('\n') + '\n'
   }
+  rotateRight() {
+    const n = this.grid.length
+    const m = this.grid[0].length
+    const rotated = Array.from({ length: m}, (_, r) => Array.from({ length: n}, (_, c) => this.grid[n - 1 - c][r]))
+    return new RotatingShape(rotated)
+  }
 }

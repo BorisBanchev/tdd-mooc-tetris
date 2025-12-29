@@ -23,7 +23,17 @@ export class Board {
       Array.isArray(value.orientations[value.currentIndex].grid)
   }
   dropTetromino(tetromino){
-
+    const shape = tetromino.orientations[tetromino.currentIndex];
+    const { height: shapeHeight, width: shapeWidth } = this.getShapeDimensions(shape);
+    const col = Math.floor((this.width - shapeWidth) / 2);
+    const row = 0;
+    this.falling = { value: tetromino, row, col, shape };
+    this.placeShape(shape, row, col);
+  }
+  dropBlock(value) {
+    const col = Math.floor(this.width / 2);
+    this.falling = { value, row: 0, col };
+    this.board[0][col] = value;
   }
   getShapeDimensions(shape) {
     const grid = shape.grid;

@@ -18,22 +18,25 @@ export class Tetromino {
     return new Tetromino(currentOrientation, orientations);
   }
   toString() {
-    return this._shape.toString()
+    return this.orientations[this.currentIndex].toString();
   }
   rotateRight() {
-    return new Tetromino(this._shape.rotateRight())
+    const next = (this.currentIndex + 1) % this.orientations.length;
+    return new Tetromino(next, this.orientations);
   }
   rotateLeft() {
-    return new Tetromino(this._shape.rotateLeft())
+    const len = this.orientations.length;
+    const prev = (this.currentIndex - 1 + len) % len;
+    return new Tetromino(prev, this.orientations);
   }
 }
-Tetromino.T_SHAPE = Tetromino.fromString(`
+Tetromino.T_SHAPE = Tetromino.fromString(0, 4, `
     .T.
     TTT
     ...
     `)
 
-Tetromino.I_SHAPE = Tetromino.fromString(`
+Tetromino.I_SHAPE = Tetromino.fromString(0, 2, `
   .....
   .....
   IIII.

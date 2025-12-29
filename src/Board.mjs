@@ -12,33 +12,22 @@ export class Board {
   drop(value) {
     if (this.falling) throw new Error("already falling")
     if (this.isTetromino(value)){
-      const shape = value.orientations[value.currentIndex]
-      const grid = shape.grid
-      const shapeHeight = grid.length
-      const shapeWidth = grid[0].length
-      const col = Math.floor((this.width - shapeWidth) / 2)
-      const row = 0
-      this.falling = { value, row, col, shape}
-      for (let r = 0; r < shapeHeight; r++) {
-        for (let c = 0; c < shapeWidth; c++) {
-          const character = grid[r][c];
-          const boardRow = row + r;
-          const boardColumn = col + c;
-          if (character !== "." && boardRow >= 0 && boardRow < this.height && boardColumn >= 0 && boardColumn < this.width) {
-            this.board[boardRow][boardColumn] = character;
-          }
-        }
-      }
+      this.dropTetromino(value)
     } else {
-      const col = Math.floor(this.width / 2)
-      this.falling = {value, row: 0, col};
-      this.board[0][col] = value
+      this.dropBlock(value)
     }
   }
   isTetromino(value) {
     return value && typeof value.currentIndex === "number" &&
       Array.isArray(value.orientations) && value.orientations[value.currentIndex] &&
       Array.isArray(value.orientations[value.currentIndex].grid)
+  }
+  dropTetromino(tetromino){
+
+  }
+  getShapeDimensions(shape) {
+    const grid = shape.grid;
+    return { height: grid.length, width: grid[0].length };
   }
   tick() {
     if (!this.falling) return;

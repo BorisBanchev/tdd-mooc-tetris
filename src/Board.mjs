@@ -66,6 +66,24 @@ export class Board {
     }
     return cells;
   }
+  canMoveTetrominoDown(falling) {
+    const { row, col, shape } = falling;
+    const occupied = new Set(this.getOccupiedCells(shape, row, col).map(([r, c]) => `${r},${c}`));
+    const grid = shape.grid;
+    const { height: h, width: w } = this.getShapeDimensions(shape);
+
+    for (let r = 0; r < h; r++) {
+      for (let c = 0; c < w; c++) {
+        if (grid[r][c] === ".") continue;
+        const newR = row + r + 1;
+        const newC = col + c;
+        if (newR >= this.height) return false;
+        const occupant = this.board[newR][newC];
+        if (occupant !== null && !occupied.has(`${newR},${newC}`)) return false;
+      }
+    }
+    return true;
+  }
   tick() {
     if (!this.falling) return;
     const { row, col, value } = this.falling;

@@ -146,4 +146,14 @@ describe("The L shape", () => {
     expect(distinctOrientations(shape).size).to.equal(4);
   });
 });
+describe("The J shape", () => {
+  const shape = Tetromino.J_SHAPE;
+
+  test("initial orientation", () => {
+    expect(shape.toString()).to.equalShape(
+      `J..
+       JJJ
+       ...`
+    );
+  });
 });

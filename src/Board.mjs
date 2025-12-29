@@ -39,6 +39,20 @@ export class Board {
     const grid = shape.grid;
     return { height: grid.length, width: grid[0].length };
   }
+  placeShape(shape, topRow, leftCol) {
+    const grid = shape.grid;
+    const { height: h, width: w } = this.getShapeDimensions(shape);
+    for (let r = 0; r < h; r++) {
+      for (let c = 0; c < w; c++) {
+        const ch = grid[r][c];
+        const br = topRow + r;
+        const bc = leftCol + c;
+        if (ch !== "." && br >= 0 && br < this.height && bc >= 0 && bc < this.width) {
+          this.board[br][bc] = ch;
+        }
+      }
+    }
+  }
   tick() {
     if (!this.falling) return;
     const { row, col, value } = this.falling;

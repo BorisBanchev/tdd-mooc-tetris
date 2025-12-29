@@ -19,6 +19,16 @@ export class Board {
       const col = Math.floor((this.width - shapeWidth) / 2)
       const row = 0
       this.falling = { value, row, col, shape}
+      for (let r = 0; r < shapeHeight; r++) {
+        for (let c = 0; c < shapeWidth; c++) {
+          const character = grid[r][c];
+          const boardRow = row + r;
+          const boardColumn = col + c;
+          if (ch !== "." && boardRow >= 0 && boardRow < this.height && boardColumn >= 0 && boardColumn < this.width) {
+            this.board[boardRow][boardColumn] = character;
+          }
+        }
+      }
     } else {
       const col = Math.floor(this.width / 2)
       this.falling = {value, row: 0, col};

@@ -203,3 +203,14 @@ describe("The S shape", () => {
     expect(distinctOrientations(shape).size).to.equal(2);
   });
 })
+describe("The Z shape", () => {
+  const shape = Tetromino.Z_SHAPE;
+
+  test("initial orientation", () => {
+    expect(shape.toString()).to.equalShape(
+      `ZZ.
+       .ZZ
+       ...`
+    );
+  });
+})

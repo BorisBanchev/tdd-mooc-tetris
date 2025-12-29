@@ -53,6 +53,19 @@ export class Board {
       }
     }
   }
+  getOccupiedCells(shape, topRow, leftCol) {
+    const cells = [];
+    const grid = shape.grid;
+    const { height: h, width: w } = this.getShapeDimensions(shape);
+    for (let r = 0; r < h; r++) {
+      for (let c = 0; c < w; c++) {
+        if (grid[r][c] !== ".") {
+          cells.push([topRow + r, leftCol + c]);
+        }
+      }
+    }
+    return cells;
+  }
   tick() {
     if (!this.falling) return;
     const { row, col, value } = this.falling;

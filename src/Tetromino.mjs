@@ -63,3 +63,8 @@ Tetromino.S_SHAPE = Tetromino.fromString(0,2, `
   SS.
   ...
   `)
+Tetromino.Z_SHAPE = Tetromino.fromString(0,2, `
+  ZZ.
+  .ZZ
+  ...
+  `)

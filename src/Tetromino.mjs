@@ -53,3 +53,8 @@ Tetromino.L_SHAPE = Tetromino.fromString(0, 4, `
   LLL
   ...
   `)
+Tetromino.J_SHAPE = Tetromino.fromString(0, 4, `
+  J..
+  JJJ
+  ...
+  `)

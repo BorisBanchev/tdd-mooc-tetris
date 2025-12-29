@@ -118,6 +118,7 @@ describe("The O shape", () => {
   test("has 1 distinct orientations", () => {
     expect(distinctOrientations(shape).size).to.equal(1);
   });
+})
 describe("The L shape", () => {
   const shape = Tetromino.L_SHAPE;
 

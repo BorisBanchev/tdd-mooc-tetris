@@ -12,11 +12,18 @@ export class Board {
   drop(value) {
     if (this.falling) throw new Error("already falling")
     if (this.isTetromino(value)){
-      
+      const shape = value.orientations[value.currentIndex]
+      const grid = shape.grid
+      const shapeHeight = grid.length
+      const shapeWidth = grid[0].length
+      const col = Math.floor((this.width - shapeWidth) / 2)
+      const row = 0
+      this.falling = { value, row, col, shape}
+    } else {
+      const col = Math.floor(this.width / 2)
+      this.falling = {value, row: 0, col};
+      this.board[0][col] = value
     }
-    const col = Math.floor(this.width / 2)
-    this.falling = {value, row: 0, col};
-    this.board[0][col] = value
   }
   isTetromino(value) {
     return value && typeof value.currentIndex === "number" &&

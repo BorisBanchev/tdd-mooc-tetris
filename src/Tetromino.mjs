@@ -48,3 +48,8 @@ Tetromino.O_SHAPE = Tetromino.fromString(0, 1, `
   .OO
   ...
   `)
+Tetromino.L_SHAPE = Tetromino.fromString(0, 4, `
+  ..L
+  LLL
+  ...
+  `)

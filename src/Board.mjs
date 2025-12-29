@@ -24,7 +24,7 @@ export class Board {
           const character = grid[r][c];
           const boardRow = row + r;
           const boardColumn = col + c;
-          if (ch !== "." && boardRow >= 0 && boardRow < this.height && boardColumn >= 0 && boardColumn < this.width) {
+          if (character !== "." && boardRow >= 0 && boardRow < this.height && boardColumn >= 0 && boardColumn < this.width) {
             this.board[boardRow][boardColumn] = character;
           }
         }

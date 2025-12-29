@@ -84,6 +84,19 @@ export class Board {
     }
     return true;
   }
+  moveTetrominoDown(falling) {
+    const { row, col, shape } = falling;
+    const occupiedCells = this.getOccupiedCells(shape, row, col);
+    // clear current cells
+    for (const [r, c] of occupiedCells) {
+      this.board[r][c] = null;
+    }
+    // set cells one row down
+    for (const [r, c] of occupiedCells) {
+      this.board[r + 1][c] = shape.grid[r - row][c - col];
+    }
+    this.falling.row = row + 1;
+  }
   tick() {
     if (!this.falling) return;
     const { row, col, value } = this.falling;

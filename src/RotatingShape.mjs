@@ -1,6 +1,9 @@
 export class RotatingShape {
   constructor(grid) {
-    this.grid = grid
+    this.grid = grid.map(row => Array.from(row))
+    this.grid.forEach(row => Object.freeze(row))
+    Object.freeze(this.grid)
+    Object.freeze(this)
   }
   static fromString(s) {
     const lines = s.split('\n').map(l => l.trim()).filter(l => l.length)

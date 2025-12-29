@@ -97,6 +97,19 @@ export class Board {
     }
     this.falling.row = row + 1;
   }
+  settleTetromino() {
+    this.falling = null;
+  }
+  moveBlockDown(falling) {
+    const { row, col, value } = falling;
+    if (row + 1 < this.height && this.board[row + 1][col] === null) {
+      this.board[row][col] = null;
+      this.board[row + 1][col] = value;
+      this.falling.row = row + 1;
+    } else {
+      this.falling = null;
+    }
+  }
   tick() {
     if (!this.falling) return;
     const { row, col, value } = this.falling;

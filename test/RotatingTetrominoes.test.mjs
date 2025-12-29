@@ -175,3 +175,14 @@ describe("The J shape", () => {
     expect(distinctOrientations(shape).size).to.equal(4);
   });
 });
+describe("The S shape", () => {
+  const shape = Tetromino.S_SHAPE;
+
+  test("initial orientation", () => {
+    expect(shape.toString()).to.equalShape(
+      `.SS
+       SS.
+       ...`
+    );
+  });
+})

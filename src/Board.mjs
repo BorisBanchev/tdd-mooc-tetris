@@ -112,13 +112,15 @@ export class Board {
   }
   tick() {
     if (!this.falling) return;
-    const { row, col, value } = this.falling;
-    if (row + 1 < this.height && this.board[row + 1][col] === null) {
-      this.board[row][col] = null;
-      this.board[row + 1][col] = value;
-      this.falling.row = row + 1;
+    const f = this.falling;
+    if (f.shape && this.isTetromino(f.value)) {
+      if (this.canMoveTetrominoDown(f)) {
+        this.moveTetrominoDown(f);
+      } else {
+        this.settleTetromino();
+      }
     } else {
-      this.falling = null
+      this.moveBlockDown(f);
     }
   }
   hasFalling(){

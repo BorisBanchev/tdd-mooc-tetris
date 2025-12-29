@@ -135,5 +135,12 @@ describe("The L shape", () => {
        .LL`
     );
   });
+  test("can be rotated left/counter-clockwise", () => {
+    expect(shape.rotateLeft().toString()).to.equalShape(
+      `LL.
+       .L.
+       .L.`
+    );
+  });
 });
 });

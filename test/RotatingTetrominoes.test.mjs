@@ -192,4 +192,11 @@ describe("The S shape", () => {
        ..S`
     );
   });
+  test("can be rotated left/counter-clockwise", () => {
+    expect(shape.rotateLeft().toString()).to.equalShape(
+      `.S.
+       .SS
+       ..S`
+    );
+  });
 })

@@ -220,4 +220,11 @@ describe("The Z shape", () => {
        .Z.`
     );
   });
+  test("can be rotated left/counter-clockwise", () => {
+    expect(shape.rotateLeft().toString()).to.equalShape(
+      `..Z
+       .ZZ
+       .Z.`
+    );
+  });
 })

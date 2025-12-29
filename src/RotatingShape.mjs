@@ -20,9 +20,6 @@ export class RotatingShape {
     return new RotatingShape(rotated)
   }
   rotateLeft() {
-    const n = this.grid.length
-    const m = this.grid[0].length
-    const rotated = Array.from({ length: m}, (_, r) => Array.from({ length: n}, (_, c) => this.grid[c][m - 1 - r]))
-    return new RotatingShape(rotated)
+    return this.rotateRight().rotateRight().rotateRight()
   }
 }

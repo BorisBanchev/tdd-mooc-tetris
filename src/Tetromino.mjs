@@ -1,9 +1,11 @@
 import { RotatingShape } from "./RotatingShape.mjs";
 
 export class Tetromino {
-  constructor(rotatingShape) {
-    this._shape = rotatingShape
-    Object.freeze(this)
+  constructor(currentIndex, orientations) {
+    this.currentIndex = currentIndex;
+    this.orientations = orientations;
+    Object.freeze(this.orientations);
+    Object.freeze(this);
   }
   static fromString(s) {
     return new Tetromino(RotatingShape.fromString(s))

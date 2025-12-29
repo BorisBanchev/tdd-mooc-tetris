@@ -7,8 +7,15 @@ export class Tetromino {
     Object.freeze(this.orientations);
     Object.freeze(this);
   }
-  static fromString(s) {
-    return new Tetromino(RotatingShape.fromString(s))
+  static fromString(currentOrientation, orientationCount, initialShape) {
+    const shape = RotatingShape.fromString(initialShape);
+    const orientations = [
+      shape,
+      shape.rotateRight(),
+      shape.rotateRight().rotateRight(),
+      shape.rotateRight().rotateRight().rotateRight(),
+    ].slice(0, orientationCount);
+    return new Tetromino(currentOrientation, orientations);
   }
   toString() {
     return this._shape.toString()

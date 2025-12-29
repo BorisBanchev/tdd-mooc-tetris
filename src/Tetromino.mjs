@@ -11,6 +11,9 @@ export class Tetromino {
   toString() {
     return this._shape.toString()
   }
+  rotateRight() {
+    return new Tetromino(this._shape.rotateRight())
+  }
 }
 Tetromino.T_SHAPE = Tetromino.fromString(`
     .T.

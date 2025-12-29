@@ -118,4 +118,35 @@ describe("The O shape", () => {
   test("has 1 distinct orientations", () => {
     expect(distinctOrientations(shape).size).to.equal(1);
   });
+describe("The L shape", () => {
+  const shape = Tetromino.L_SHAPE;
+
+  test("initial orientation", () => {
+    expect(shape.toString()).to.equalShape(
+      `..L
+       LLL
+       ...`
+    );
+  });
+
+  test.skip("can be rotated right/clockwise", () => {
+    expect(shape.rotateRight().toString()).to.equalShape(
+      `.L.
+       .L.
+       .LL`
+    );
+  });
+
+  test.skip("can be rotated left/counter-clockwise", () => {
+    expect(shape.rotateLeft().toString()).to.equalShape(
+      `LL.
+       .L.
+       .L.`
+    );
+  });
+
+  test.skip("has 4 distinct orientations", () => {
+    expect(distinctOrientations(shape).size).to.equal(4);
+  });
+});
 });

@@ -171,4 +171,7 @@ describe("The J shape", () => {
        JJ.`
     );
   });
+  test("has 4 distinct orientations", () => {
+    expect(distinctOrientations(shape).size).to.equal(4);
+  });
 });

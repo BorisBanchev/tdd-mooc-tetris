@@ -56,7 +56,18 @@ export class TetrominoMover {
       return;
     }
 
-    board.executeBlockMove(dr, dc, falling);
+    this.executeBlockMove(dr, dc, board, falling);
+  }
+  executeBlockMove(dr, dc, board, falling) {
+    const { row, col, value } = falling;
+    const newR = row + dr;
+    const newC = col + dc;
+    if (newR >= 0 && newR < board.height && newC >= 0 && newC < board.width && board.board[newR][newC] === null) {
+      board.board[row][col] = null;
+      board.board[newR][newC] = value;
+      board.falling.col = newC;
+      board.falling.row = newR;
+    }
   }
   moveLeft(board) {
     const f = board.falling;

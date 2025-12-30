@@ -152,7 +152,7 @@ describe("Moving falling tetrominoes", () => {
        .......TTT`
     );
   })
-  test("it cannot be moved down through other blocks", () => {
+  test("it cannot be moved down through other blocks (will stop falling)", () => {
     board.drop(Tetromino.T_SHAPE)
     fallToBottom(board)
     board.drop(Tetromino.T_SHAPE)
@@ -165,5 +165,6 @@ describe("Moving falling tetrominoes", () => {
        ....T.....
        ...TTT....`
     );
+    expect(board.hasFalling()).to.equal(false);
   })
 })

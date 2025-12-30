@@ -3,6 +3,21 @@ import { expect } from "chai";
 import { Board } from "../src/Board.mjs";
 import { Tetromino } from "../src/Tetromino.mjs";
 
+function fallToBottom(board) {
+  for (i = 0; i < 10; i++) {
+    board.tick()
+  }
+}
+function moveToLeftCorner(board) {
+  for (i = 0; i < 10; i++) {
+    board.moveLeft()
+  }
+}
+function moveToRightCorner(board) {
+  for (i = 0; i < 10; i++) {
+    board.moveRight()
+  }
+}
 describe("Moving falling tetrominoes", () => {
   let board
   beforeEach(() => {

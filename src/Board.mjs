@@ -1,3 +1,5 @@
+import { TetrominoMover } from "./TetrominoMover.mjs";
+
 export class Board {
   width;
   height;
@@ -7,6 +9,7 @@ export class Board {
     this.height = height;
     this.board = Array.from({ length: height }, () => Array.from({ length: width }, () => null));
     this.falling = null
+    this.mover = new TetrominoMover()
   }
 
   drop(value) {
@@ -142,18 +145,7 @@ export class Board {
   }
 
   moveLeft() {
-    if (!this.falling) return
-    const f = this.falling
-    if (f.shape && this.isTetromino(f.value)) {
-      const occupiedCells = this.getOccupiedCells(f.shape, f.row, f.col)
-      if (this.canMoveTetromino("left", f, occupiedCells)) {
-        this.executeMove("left", f, occupiedCells)
-      }
-    } else {
-      if (this.canMoveBlock("left", f, null)) {
-        this.executeMove("left", f, null)
-      }
-    }
+    this.mover.moveLeft(this)
   }
   moveRight() {
     if (!this.falling) return

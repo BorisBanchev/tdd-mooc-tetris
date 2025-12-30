@@ -152,4 +152,18 @@ describe("Moving falling tetrominoes", () => {
        .......TTT`
     );
   })
+  test("it cannot be moved down through other blocks", () => {
+    board.drop(Tetromino.T_SHAPE)
+    fallToBottom(board)
+    board.drop(Tetromino.T_SHAPE)
+    fallToBottom(board)
+    expect(board.toString()).to.equalShape(
+      `..........
+       ..........
+       ....T.....
+       ...TTT....
+       ....T.....
+       ...TTT....`
+    );
+  })
 })

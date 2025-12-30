@@ -69,26 +69,7 @@ export class Board {
     }
     return cells;
   }
-  canMoveTetromino(direction, falling, occupiedCells) {
-    if (!falling || !falling.shape || !this.isTetromino(falling.value)) return false;
-    const dirs = { left: [0, -1], right: [0, 1], down: [1, 0] };
-    const d = dirs[direction];
-    if (!d) return false;
-    const [dr, dc] = d;
-
-    const { row, col, shape } = falling;
-    const occupied = occupiedCells || this.getOccupiedCells(shape, row, col);
-    const occupiedSet = new Set(occupied.map(([r, c]) => `${r},${c}`));
-
-    for (const [r, c] of occupied) {
-      const newR = r + dr;
-      const newC = c + dc;
-      if (newR < 0 || newR >= this.height || newC < 0 || newC >= this.width) return false;
-      const occupant = this.board[newR][newC];
-      if (occupant !== null && !occupiedSet.has(`${newR},${newC}`)) return false;
-    }
-    return true;
-  }
+  
   canMoveBlock(direction, falling, occupiedCells) {
     if (!falling || falling.shape) return false;
     const dirs = { left: [0, -1], right: [0, 1], down: [1, 0] };

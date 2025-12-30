@@ -2,12 +2,32 @@ export class TetrominoMover {
   constructor() {
     this.dirs = { left: [0, -1], right: [0, 1], down: [1, 0] };
   }
+  canMoveTetromino(direction, board, falling, occupiedCells) {
+    if (!falling || !falling.shape || !board.isTetromino(falling.value)) return false;
+    const d = this.dirs[direction];
+    if (!d) return false;
+    const [dr, dc] = d;
+
+    const { row, col, shape } = falling;
+    const occupied = occupiedCells || board.getOccupiedCells(shape, row, col);
+    const occupiedSet = new Set(occupied.map(([r, c]) => `${r},${c}`));
+
+    for (const [r, c] of occupied) {
+      const newR = r + dr;
+      const newC = c + dc;
+      if (newR < 0 || newR >= board.height || newC < 0 || newC >= board.width) return false;
+      const occupant = board.board[newR][newC];
+      if (occupant !== null && !occupiedSet.has(`${newR},${newC}`)) return false;
+    }
+    return true;
+  }
+  
   moveLeft(board) {
     const f = board.falling;
     if (!f) return;
     if (f.shape && board.isTetromino(f.value)) {
       const occupied = board.getOccupiedCells(f.shape, f.row, f.col);
-      if (board.canMoveTetromino("left", f, occupied)) {
+      if (this.canMoveTetromino("left", board, f, occupied)) {
         board.executeMove("left", f, occupied);
       }
     } else {
@@ -21,7 +41,7 @@ export class TetrominoMover {
     if (!f) return;
     if (f.shape && board.isTetromino(f.value)) {
       const occupied = board.getOccupiedCells(f.shape, f.row, f.col);
-      if (board.canMoveTetromino("right", f, occupied)) {
+      if (this.canMoveTetromino("right", board, f, occupied)) {
         board.executeMove("right", f, occupied);
       }
     } else {
@@ -35,7 +55,7 @@ export class TetrominoMover {
     if (!f) return;
     if (f.shape && board.isTetromino(f.value)) {
       const occupied = board.getOccupiedCells(f.shape, f.row, f.col);
-      if (board.canMoveTetromino("down", f, occupied)) {
+      if (this.canMoveTetromino("down", board, f, occupied)) {
         board.executeMove("down", f, occupied);
       } else {
         board.settleTetromino();
@@ -52,7 +72,7 @@ export class TetrominoMover {
     const f = board.falling;
     if (!f) return;
     if (f.shape && board.isTetromino(f.value)) {
-      if (board.canMoveTetromino("down", f, null)) {
+      if (this.canMoveTetromino("down", board, f, null)) {
         board.executeMove("down", f, null);
       } else {
         board.falling = null;

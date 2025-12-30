@@ -48,4 +48,21 @@ export class TetrominoMover {
       }
     }
   }
+  tick(board) {
+    const f = board.falling;
+    if (!f) return;
+    if (f.shape && board.isTetromino(f.value)) {
+      if (board.canMoveTetromino("down", f, null)) {
+        board.executeMove("down", f, null);
+      } else {
+        board.falling = null;
+      }
+    } else {
+      if (board.canMoveBlock("down", f, null)) {
+        board.executeMove("down", f, null);
+      } else {
+        board.falling = null;
+      }
+    }
+  }
 }

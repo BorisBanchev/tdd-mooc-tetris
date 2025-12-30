@@ -154,21 +154,7 @@ export class Board {
     this.mover.moveDown(this)
   }
   tick() {
-    if (!this.falling) return;
-    const f = this.falling;
-    if (f.shape && this.isTetromino(f.value)) {
-      if (this.canMoveTetromino("down", f, null)) {
-        this.executeMove("down", f, null);
-      } else {
-        this.settleTetromino();
-      }
-    } else {
-      if (this.canMoveBlock("down", f, null)) {
-        this.executeMove("down", f, null);
-      } else {
-        this.falling = null;
-      }
-    }
+    this.mover.tick(this)
   }
   hasFalling(){
     return !!this.falling

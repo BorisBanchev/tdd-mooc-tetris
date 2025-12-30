@@ -99,6 +99,17 @@ export class Board {
     if (newR < 0 || newR >= this.height || newC < 0 || newC >= this.width) return false;
     return this.board[newR][newC] === null;
   }
+  executeBlockMove(directionRow, directionColumn, falling) {
+    const { row, col, value } = falling;
+    const newR = row + directionRow;
+    const newC = col + directionColumn;
+    if (newR >= 0 && newR < this.height && newC >= 0 && newC < this.width && this.board[newR][newC] === null) {
+      this.board[row][col] = null;
+      this.board[newR][newC] = value;
+      this.falling.col = newC;
+      this.falling.row = newR;
+    }
+  }
   executeMove(direction, falling, occupiedCells) {
     if (!falling) return;
     const dirs = { left: [0, -1], right: [0, 1], down: [1, 0] };

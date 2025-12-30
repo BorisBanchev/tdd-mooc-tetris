@@ -99,6 +99,32 @@ export class Board {
     if (newR < 0 || newR >= this.height || newC < 0 || newC >= this.width) return false;
     return this.board[newR][newC] === null;
   }
+  executeMove(direction, falling, occupiedCells) {
+    if (!falling) return;
+    const dirs = { left: [0, -1], right: [0, 1], down: [1, 0] };
+    const d = dirs[direction];
+    if (!d) return;
+    const [dr, dc] = d;
+
+    if (falling.shape && this.isTetromino(falling.value)) {
+      const { row, col, shape } = falling;
+      const occupied = occupiedCells || this.getOccupiedCells(shape, row, col);
+      for (const [r, c] of occupied) {
+        this.board[r][c] = null;
+      }
+      for (const [r, c] of occupied) {
+        const ch = shape.grid[r - row][c - col];
+        const newR = r + dr;
+        const newC = c + dc;
+        this.board[newR][newC] = ch;
+      }
+      this.falling.row = row + dr;
+      this.falling.col = col + dc;
+      return;
+    }
+    this.executeBlockMove(directionRow, directionColumn, falling)
+    
+  }
   moveTetrominoDown(falling) {
     const { row, col, shape } = falling;
     const occupiedCells = this.getOccupiedCells(shape, row, col);

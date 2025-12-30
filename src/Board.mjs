@@ -66,21 +66,23 @@ export class Board {
     }
     return cells;
   }
-  canMoveTetrominoDown(falling) {
-    const { row, col, shape } = falling;
-    const occupied = new Set(this.getOccupiedCells(shape, row, col).map(([r, c]) => `${r},${c}`));
-    const grid = shape.grid;
-    const { height: h, width: w } = this.getShapeDimensions(shape);
+  canMoveTetromino(direction, falling, occupiedCells) {
+    if (!falling || !falling.shape || !this.isTetromino(falling.value)) return false;
+    const dirs = { left: [0, -1], right: [0, 1], down: [1, 0] };
+    const d = dirs[direction];
+    if (!d) return false;
+    const [dr, dc] = d;
 
-    for (let r = 0; r < h; r++) {
-      for (let c = 0; c < w; c++) {
-        if (grid[r][c] === ".") continue;
-        const newR = row + r + 1;
-        const newC = col + c;
-        if (newR >= this.height) return false;
-        const occupant = this.board[newR][newC];
-        if (occupant !== null && !occupied.has(`${newR},${newC}`)) return false;
-      }
+    const { row, col, shape } = falling;
+    const occupied = occupiedCells || this.getOccupiedCells(shape, row, col);
+    const occupiedSet = new Set(occupied.map(([r, c]) => `${r},${c}`));
+
+    for (const [r, c] of occupied) {
+      const newR = r + dr;
+      const newC = c + dc;
+      if (newR < 0 || newR >= this.height || newC < 0 || newC >= this.width) return false;
+      const occupant = this.board[newR][newC];
+      if (occupant !== null && !occupiedSet.has(`${newR},${newC}`)) return false;
     }
     return true;
   }
@@ -110,6 +112,7 @@ export class Board {
       this.falling = null;
     }
   }
+
   moveLeft() {
     if (!this.falling) return
     const f = this.falling

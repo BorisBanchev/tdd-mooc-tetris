@@ -30,4 +30,22 @@ export class TetrominoMover {
       }
     }
   }
+  moveDown(board) {
+    const f = board.falling;
+    if (!f) return;
+    if (f.shape && board.isTetromino(f.value)) {
+      const occupied = board.getOccupiedCells(f.shape, f.row, f.col);
+      if (board.canMoveTetromino("down", f, occupied)) {
+        board.executeMove("down", f, occupied);
+      } else {
+        board.settleTetromino();
+      }
+    } else {
+      if (board.canMoveBlock("down", f, null)) {
+        board.executeMove("down", f, null);
+      } else {
+        board.falling = null;
+      }
+    }
+  }
 }

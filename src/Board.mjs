@@ -151,22 +151,7 @@ export class Board {
     this.mover.moveRight(this)
   }
   moveDown() {
-    if (!this.falling) return
-    const f = this.falling
-    if (f.shape && this.isTetromino(f.value)) {
-      const occupiedCells = this.getOccupiedCells(f.shape, f.row, f.col)
-      if (this.canMoveTetromino("down", f, occupiedCells)) {
-        this.executeMove("down", f, occupiedCells)
-      } else {
-        this.settleTetromino()
-      }
-    } else {
-      if (this.canMoveBlock("down", f, null)) {
-        this.executeMove("down", f, null)
-      } else {
-        this.falling = null
-      }
-    }
+    this.mover.moveDown(this)
   }
   tick() {
     if (!this.falling) return;

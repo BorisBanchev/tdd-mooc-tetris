@@ -21,7 +21,18 @@ export class TetrominoMover {
     }
     return true;
   }
-  
+  canMoveBlock(direction, board, falling) {
+    if (!falling || falling.shape) return false;
+    const d = this.dirs[direction];
+    if (!d) return false;
+    const [dr, dc] = d;
+
+    const { row, col } = falling;
+    const newR = row + dr;
+    const newC = col + dc;
+    if (newR < 0 || newR >= board.height || newC < 0 || newC >= board.width) return false;
+    return board.board[newR][newC] === null;
+  }
   moveLeft(board) {
     const f = board.falling;
     if (!f) return;
@@ -31,7 +42,7 @@ export class TetrominoMover {
         board.executeMove("left", f, occupied);
       }
     } else {
-      if (board.canMoveBlock("left", f, null)) {
+      if (this.canMoveBlock("left", board, f)) {
         board.executeMove("left", f, null);
       }
     }
@@ -45,7 +56,7 @@ export class TetrominoMover {
         board.executeMove("right", f, occupied);
       }
     } else {
-      if (board.canMoveBlock("right", f, null)) {
+      if (this.canMoveBlock("right", board, f)) {
         board.executeMove("right", f, null);
       }
     }
@@ -61,7 +72,7 @@ export class TetrominoMover {
         board.settleTetromino();
       }
     } else {
-      if (board.canMoveBlock("down", f, null)) {
+      if (this.canMoveBlock("down", board, f)) {
         board.executeMove("down", f, null);
       } else {
         board.falling = null;
@@ -78,7 +89,7 @@ export class TetrominoMover {
         board.falling = null;
       }
     } else {
-      if (board.canMoveBlock("down", f, null)) {
+      if (this.canMoveBlock("down", board, f)) {
         board.executeMove("down", f, null);
       } else {
         board.falling = null;

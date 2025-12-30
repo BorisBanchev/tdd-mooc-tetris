@@ -110,6 +110,20 @@ export class Board {
       this.falling = null;
     }
   }
+  moveLeft() {
+    if (!this.falling) return
+    const f = this.falling
+    if (f.shape && this.isTetromino(f.value)) {
+      const occupiedCells = this.getOccupiedCells(f.shape, f.row, f.col)
+      if (this.validateMove("left", f, occupiedCells)) {
+        this.executeMove("left", f, occupiedCells)
+      }
+    } else {
+      if (this.validateMove("left", f, null)) {
+        this.executeMove("left", f, null)
+      }
+    }
+  }
   tick() {
     if (!this.falling) return;
     const f = this.falling;

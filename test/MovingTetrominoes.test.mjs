@@ -4,17 +4,17 @@ import { Board } from "../src/Board.mjs";
 import { Tetromino } from "../src/Tetromino.mjs";
 
 function fallToBottom(board) {
-  for (i = 0; i < 10; i++) {
+  for (let i = 0; i < 10; i++) {
     board.tick()
   }
 }
 function moveToLeftCorner(board) {
-  for (i = 0; i < 10; i++) {
+  for (let i = 0; i < 10; i++) {
     board.moveLeft()
   }
 }
 function moveToRightCorner(board) {
-  for (i = 0; i < 10; i++) {
+  for (let i = 0; i < 10; i++) {
     board.moveRight()
   }
 }
@@ -110,4 +110,25 @@ describe("Moving falling tetrominoes", () => {
     );
     expect(board.hasFalling()).to.equal(false);
   });
+  test("it cannot be moved left through other blocks", () => {
+    board.drop(Tetromino.T_SHAPE)
+    moveToLeftCorner(board)
+    fallToBottom(board)
+    board.drop(Tetromino.T_SHAPE)
+    moveToLeftCorner(board)
+    fallToBottom(board)
+    board.drop(Tetromino.T_SHAPE)
+    moveToLeftCorner(board)
+    fallToBottom(board)
+    board.drop(Tetromino.T_SHAPE)
+    moveToLeftCorner(board)
+    expect(board.toString()).to.equalShape(
+      `.T..T.....
+       TTTTTT....
+       .T........
+       TTT.......
+       .T........
+       TTT.......`
+    );
+  })
 })

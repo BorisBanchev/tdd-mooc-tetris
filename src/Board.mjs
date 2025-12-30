@@ -133,34 +133,12 @@ export class Board {
       this.falling.col = col + dc;
       return;
     }
-    this.executeBlockMove(directionRow, directionColumn, falling)
+    this.executeBlockMove(dr, dc, falling)
     
   }
-  moveTetrominoDown(falling) {
-    const { row, col, shape } = falling;
-    const occupiedCells = this.getOccupiedCells(shape, row, col);
-    // clear current cells
-    for (const [r, c] of occupiedCells) {
-      this.board[r][c] = null;
-    }
-    // set cells one row down
-    for (const [r, c] of occupiedCells) {
-      this.board[r + 1][c] = shape.grid[r - row][c - col];
-    }
-    this.falling.row = row + 1;
-  }
+  
   settleTetromino() {
     this.falling = null;
-  }
-  moveBlockDown(falling) {
-    const { row, col, value } = falling;
-    if (row + 1 < this.height && this.board[row + 1][col] === null) {
-      this.board[row][col] = null;
-      this.board[row + 1][col] = value;
-      this.falling.row = row + 1;
-    } else {
-      this.falling = null;
-    }
   }
 
   moveLeft() {
@@ -168,11 +146,11 @@ export class Board {
     const f = this.falling
     if (f.shape && this.isTetromino(f.value)) {
       const occupiedCells = this.getOccupiedCells(f.shape, f.row, f.col)
-      if (this.validateMove("left", f, occupiedCells)) {
+      if (this.canMoveTetromino("left", f, occupiedCells)) {
         this.executeMove("left", f, occupiedCells)
       }
     } else {
-      if (this.validateMove("left", f, null)) {
+      if (this.canMoveBlock("left", f, null)) {
         this.executeMove("left", f, null)
       }
     }
@@ -181,13 +159,17 @@ export class Board {
     if (!this.falling) return;
     const f = this.falling;
     if (f.shape && this.isTetromino(f.value)) {
-      if (this.canMoveTetrominoDown(f)) {
-        this.moveTetrominoDown(f);
+      if (this.canMoveTetromino("down", f, null)) {
+        this.executeMove("down", f, null);
       } else {
         this.settleTetromino();
       }
     } else {
-      this.moveBlockDown(f);
+      if (this.canMoveBlock("down", f, null)) {
+        this.executeMove("down", f, null);
+      } else {
+        this.falling = null;
+      }
     }
   }
   hasFalling(){
